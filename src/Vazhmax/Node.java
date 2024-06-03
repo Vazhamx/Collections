@@ -1,10 +1,10 @@
 package Vazhmax;
 
-class Cell {
+class Node {
     int value;
-    Cell nextElement;
+    Node nextElement;
     
-    public Cell(int value){
+    public Node(int value){
         this.value = value;
     }
 }

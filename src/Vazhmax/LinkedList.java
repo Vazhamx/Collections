@@ -3,12 +3,12 @@ package Vazhmax;
 import java.util.Objects;
 
 public class LinkedList {
-    private Cell startCell;
-    private boolean isClear = true;
+    private Node head;
+    private boolean isEmpty = true;
     
     public int get(int index){
         int counter = 0;
-        Cell currentValue = startCell;
+        Node currentValue = head;
         while(counter != index) {
             if(currentValue.nextElement == null){
                 throw new ArrayIndexOutOfBoundsException();
@@ -20,17 +20,17 @@ public class LinkedList {
     }
     
     public void add(int value){
-        if(isClear){
-            startCell = new Cell(value);
-            isClear = false;
+        if(isEmpty){
+            head = new Node(value);
+            isEmpty = false;
         }
         else{
-            Cell currentCell = startCell;
-            Cell newCell = new Cell(value);
-            while (currentCell.nextElement != null) {
-                currentCell = currentCell.nextElement;
+            Node currentNode = head;
+            Node newNode = new Node(value);
+            while (currentNode.nextElement != null) {
+                currentNode = currentNode.nextElement;
             }
-            currentCell.nextElement = newCell;
+            currentNode.nextElement = newNode;
         }
     }
     
@@ -41,11 +41,11 @@ public class LinkedList {
     }
 
     public int length() {
-        if(isClear) return 0;
-        Cell currentCell = startCell;
+        if(isEmpty) return 0;
+        Node currentNode = head;
         int length = 0;
-        while (currentCell != null) {
-            currentCell = currentCell.nextElement;
+        while (currentNode != null) {
+            currentNode = currentNode.nextElement;
             length++;
         }
         
@@ -54,12 +54,12 @@ public class LinkedList {
 
     @Override
     public String toString() {
-        if(isClear) return "[]";
-        Cell currentCell = startCell;
+        if(isEmpty) return "[]";
+        Node currentNode = head;
         StringBuilder stringBuilder = new StringBuilder("[");
-        while(currentCell != null){
-            stringBuilder.append(currentCell.value).append(", ");
-            currentCell = currentCell.nextElement;
+        while(currentNode != null){
+            stringBuilder.append(currentNode.value).append(", ");
+            currentNode = currentNode.nextElement;
         }
         stringBuilder.delete(stringBuilder.length() -2, stringBuilder.length());
         stringBuilder.append("]");
@@ -79,6 +79,6 @@ public class LinkedList {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(startCell.value);
+        return Objects.hashCode(head.value);
     }
 }
