@@ -5,7 +5,22 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class LinkedList<T> implements List<T> {
     private Node head;
-    
+
+    public LinkedList() {
+    }
+
+    public LinkedList(T value) {
+        head = new Node(value);
+    }
+
+    public LinkedList(T[] values) {
+        this.addAll(Arrays.asList(values));
+    }
+
+    public LinkedList(List<T> values) {
+        addAll(values);
+    }
+
     @Override
     public int size() {
         Node current = head;
@@ -22,7 +37,7 @@ public class LinkedList<T> implements List<T> {
     public void clear() {
         head = null;
     }
-    
+
     @Override
     public boolean isEmpty() {
         return head == null;
@@ -42,21 +57,21 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        //TODO containsAll()
+        //TODO containsAll();
         return false;
     }
-    
+
     @Override
     public T get(int index) {
-        if(index >= size())
+        if (index >= size())
             throw new ArrayIndexOutOfBoundsException(index);
         Node current = head;
-        for(int i = 0; i < index; i++){
+        for (int i = 0; i < index; i++) {
             current = current.next;
         }
         return (T) current.value;
     }
-    
+
     @Override
     public boolean add(T t) {
         if (isEmpty()) {
@@ -71,20 +86,27 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public void add(int index, T element) {
-        if (index >= size()) 
+        if (index >= size())
             throw new ArrayIndexOutOfBoundsException(index);
         Node previous = getNode(index - 1);
         previous.next = new Node(element, previous.next);
     }
-    
+
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        for (T t : c) {
+            add(t);
+        }
+        return true;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
-        return false;
+        Object[] arr = c.toArray();
+        for (int i = c.size() - 1; i >= 0; i--) {
+            add(index, (T) arr[i]);
+        }
+        return true;
     }
 
     @Override
@@ -93,20 +115,19 @@ public class LinkedList<T> implements List<T> {
         getNode(index - 1).next = new Node(element, getNode(index + 1));
         return oldElement;
     }
-    
+
     @Override
     public T remove(int index) {
-        if(index == 0) {
+        if (index == 0) {
             head = head.next;
             return (T) head.value;
-        }
-        else if(index >= size()) 
+        } else if (index >= size())
             throw new ArrayIndexOutOfBoundsException(index);
         T oldElement = get(index);
         getNode(index - 1).next = getNode(index).next;
         return oldElement;
     }
-    
+
     @Override
     public boolean remove(Object o) {
         if (!contains(o))
@@ -114,7 +135,7 @@ public class LinkedList<T> implements List<T> {
         remove(indexOf(o));
         return true;
     }
-    
+
     @Override
     public boolean removeAll(Collection<?> c) {
         return false;
@@ -124,7 +145,7 @@ public class LinkedList<T> implements List<T> {
     public boolean retainAll(Collection<?> c) {
         return false;
     }
-    
+
     @Override
     public int indexOf(Object o) {
         Node current = head;
@@ -140,31 +161,31 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public int lastIndexOf(Object o) {
-        //TODO lastIndexOf()
+        //TODO lastIndexOf();
         return 0;
     }
-    
+
     @Override
     public Iterator<T> iterator() {
-        //TODO Iterator()
+        //TODO Iterator();
         return null;
     }
-    
+
     @Override
     public ListIterator<T> listIterator() {
-        //TODO listIterator()
+        //TODO listIterator();
         return null;
     }
 
     @Override
     public ListIterator<T> listIterator(int index) {
-        //TODO listIterator()
+        //TODO listIterator();
         return null;
     }
 
     @Override
     public List<T> subList(int fromIndex, int toIndex) {
-        //TODO subList()
+        //TODO subList();
         return List.of();
     }
 
@@ -180,7 +201,7 @@ public class LinkedList<T> implements List<T> {
 
         return result;
     }
-    
+
     @Override
     public <T1> T1[] toArray(T1[] a) {
         return (T1[]) toArray();
@@ -204,10 +225,10 @@ public class LinkedList<T> implements List<T> {
     @Override
     public boolean equals(Object obj) {
         LinkedList<?> list = (LinkedList<?>) obj;
-        if(list.size() != this.size()) 
+        if (list.size() != this.size())
             return false;
-        for(int i = 0; i < this.size(); i++){
-            if(list.get(i) != this.get(i)) 
+        for (int i = 0; i < this.size(); i++) {
+            if (list.get(i) != this.get(i))
                 return false;
         }
         return true;

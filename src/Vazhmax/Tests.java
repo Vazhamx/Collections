@@ -1,6 +1,6 @@
 package Vazhmax;
 
-import java.util.List;
+import java.util.*;
 
 public class Tests {
     /* work methods:
@@ -18,7 +18,7 @@ public class Tests {
      * hashCode()
      */
     public static void main(String[] args) {
-        // put test here
+        // put tests here
     }
     
     public static void sizeTest(){
