@@ -9,16 +9,16 @@ public class LinkedList<T> implements List<T> {
     public LinkedList() {
     }
 
-    public LinkedList(T value) {
-        head = new Node(value);
+    public LinkedList(T element) {
+        head = new Node(element);
     }
 
-    public LinkedList(T[] values) {
-        this.addAll(Arrays.asList(values));
+    public LinkedList(T[] elements) {
+        this.addAll(Arrays.asList(elements));
     }
 
-    public LinkedList(List<T> values) {
-        addAll(values);
+    public LinkedList(Collection<? extends T> elements) {
+        addAll(elements);
     }
 
     @Override
@@ -167,7 +167,7 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        //TODO Iterator();
+        //TODO iterator();
         return null;
     }
 
