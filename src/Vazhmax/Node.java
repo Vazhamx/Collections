@@ -1,10 +1,15 @@
 package Vazhmax;
 
 class Node {
-    int value;
-    Node nextElement;
-    
-    public Node(int value){
+    Object value;
+    Node next;
+
+    Node(Object value) {
         this.value = value;
+    }
+
+    Node(Object value, Node next) {
+        this.value = value;
+        this.next = next;
     }
 }

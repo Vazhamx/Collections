@@ -1,77 +1,203 @@
 package Vazhmax;
 
-import java.util.Objects;
+import java.util.*;
 
-public class LinkedList {
+public class LinkedList<T> implements List<T> {
     private Node head;
-    private boolean isEmpty = true;
-    
-    public int get(int index){
-        int counter = 0;
-        Node currentValue = head;
-        while(counter != index) {
-            if(currentValue.nextElement == null){
-                throw new ArrayIndexOutOfBoundsException();
-            }
-            currentValue = currentValue.nextElement;
-            counter++;
-        }
-        return currentValue.value;
-    }
-    
-    public void add(int value){
-        if(isEmpty){
-            head = new Node(value);
-            isEmpty = false;
-        }
-        else{
-            Node currentNode = head;
-            Node newNode = new Node(value);
-            while (currentNode.nextElement != null) {
-                currentNode = currentNode.nextElement;
-            }
-            currentNode.nextElement = newNode;
-        }
-    }
-    
-    
 
-    public void add(int index, int value){
-        //TODO index add
+
+    @Override
+    public int size() {
+        Node current = head;
+        int size = 0;
+        while (current != null) {
+            size++;
+            current = current.next;
+        }
+
+        return size;
     }
 
-    public int length() {
-        if(isEmpty) return 0;
-        Node currentNode = head;
-        int length = 0;
-        while (currentNode != null) {
-            currentNode = currentNode.nextElement;
-            length++;
+    @Override
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        Node current = head;
+        for (int i = 0; i < size(); i++) {
+            if (current.value.equals(o))
+                return true;
+            current = current.next;
         }
-        
-        return length;
+
+        return false;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        //TODO Iterator()
+        return null;
+    }
+
+    @Override
+    public Object[] toArray() {
+        Object[] result = new Object[size()];
+
+        Node current = head;
+        for (int i = 0; i < size(); i++) {
+            result[i] = current.value;
+            current = current.next;
+        }
+
+        return result;
+    }
+
+    @Override
+    public <T1> T1[] toArray(T1[] a) {
+        return (T1[]) toArray();
+    }
+
+    @Override
+    public boolean add(T t) {
+        if (isEmpty()) {
+            head = new Node(t);
+        } else {
+            Node newNode = new Node(t);
+            Node previous = getNode(size() - 1);
+            previous.next = newNode;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        if (!contains(o))
+            return false;
+        Node current = head;
+        for (int i = 0; i < size(); i++) {
+            if (current.value.equals(o)) {
+                i--;
+                getNode(i).next = current.next;
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        return false;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends T> c) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
+    }
+
+    @Override
+    public void clear() {
+        head = null;
+    }
+
+    @Override
+    public T get(int index) {
+        return null;
+    }
+
+    @Override
+    public T set(int index, T element) {
+        return null;
+    }
+
+    @Override
+    public void add(int index, T element) {
+        if (index >= size()) throw new ArrayIndexOutOfBoundsException(index);
+        Node previous = getNode(index - 1);
+        previous.next = new Node(element, previous.next);
+    }
+
+    @Override
+    public T remove(int index) {
+        return null;
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        Node current = head;
+        for (int i = 0; i < size(); i++) {
+            if (current.value.equals(o)) {
+                return i;
+            }
+            current = current.next;
+        }
+
+        return -1;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        //TODO lastIndexOf()
+        return 0;
+    }
+
+    @Override
+    public ListIterator<T> listIterator() {
+        //TODO listIterator()
+        return null;
+    }
+
+    @Override
+    public ListIterator<T> listIterator(int index) {
+        //TODO listIterator()
+        return null;
+    }
+
+    @Override
+    public List<T> subList(int fromIndex, int toIndex) {
+        //TODO subList()
+        return List.of();
     }
 
     @Override
     public String toString() {
-        if(isEmpty) return "[]";
+        if (isEmpty()) return "[]";
         Node currentNode = head;
         StringBuilder stringBuilder = new StringBuilder("[");
-        while(currentNode != null){
+        while (currentNode != null) {
             stringBuilder.append(currentNode.value).append(", ");
-            currentNode = currentNode.nextElement;
+            currentNode = currentNode.next;
         }
-        stringBuilder.delete(stringBuilder.length() -2, stringBuilder.length());
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
         stringBuilder.append("]");
+
         return stringBuilder.toString();
     }
 
     @Override
     public boolean equals(Object obj) {
-        LinkedList list = (LinkedList) obj;
-        if(length() != list.length()) return false;
-        for (int i = 0; i < length(); i++){
-            if(get(i) != list.get(i))
+        LinkedList<?> list = (LinkedList<?>) obj;
+        if(list.size() != size()) 
+            return false;
+        for(int i = 0; i < size(); i++){
+            if(list.get(i) != get(i)) 
                 return false;
         }
         return true;
@@ -79,6 +205,17 @@ public class LinkedList {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(head.value);
+        return Arrays.hashCode(toArray());
+    }
+
+    private Node getNode(int index) {
+        int counter = 0;
+        Node current = head;
+        while (counter != index) {
+            current = current.next;
+            counter++;
+        }
+
+        return current;
     }
 }
