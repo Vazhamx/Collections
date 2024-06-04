@@ -12,4 +12,9 @@ class Node {
         this.value = value;
         this.next = next;
     }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
 }

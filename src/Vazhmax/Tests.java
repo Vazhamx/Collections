@@ -3,21 +3,6 @@ package Vazhmax;
 import java.util.*;
 
 public class Tests {
-    /* work methods:
-     * size()
-     * clear()
-     * isEmpty()
-     * contains()
-     * get()
-     * add() | both
-     * addAll() | both
-     * remove() | both
-     * indexOf()
-     * toArray() | both
-     * toString()
-     * equals()
-     * hashCode()
-     */
     public static void main(String[] args) {
         // put tests here
     }

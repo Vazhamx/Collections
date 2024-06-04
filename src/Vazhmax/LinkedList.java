@@ -57,8 +57,10 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        //TODO containsAll();
-        return false;
+        for (Object t : c) {
+            if (!contains(t)) return false;
+        }
+        return true;
     }
 
     @Override
@@ -138,11 +140,16 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        for (Object t : c) {
+            while (contains(t))
+                remove(t);
+        }
+        return true;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
+        //TODO retainAll();
         return false;
     }
 
@@ -161,8 +168,14 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public int lastIndexOf(Object o) {
-        //TODO lastIndexOf();
-        return 0;
+        List<Integer> contains = new ArrayList<>();
+        Node current = head;
+        for (int i = 0; i < size(); i++) {
+            if (current.value.equals(o))
+                contains.add(i);
+            current = current.next;
+        }
+        return contains.getLast();
     }
 
     @Override
